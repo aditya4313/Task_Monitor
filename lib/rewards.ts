@@ -54,7 +54,7 @@ export async function checkAndUnlockRewards(
     const rewardIds = newlyUnlocked.map(r => r.id)
     await db.collection('users').updateOne(
       { _id: new ObjectId(userId) },
-      { $push: { unlockedRewards: { $each: rewardIds } } }
+      { $push: { unlockedRewards: { $each: rewardIds } } } as any
     )
   }
 
@@ -100,7 +100,7 @@ export async function checkPerfectWeek(userId: string): Promise<boolean> {
   if (user && !user.unlockedRewards?.includes('perfect_week')) {
     await db.collection('users').updateOne(
       { _id: new ObjectId(userId) },
-      { $push: { unlockedRewards: 'perfect_week' } }
+      { $push: { unlockedRewards: 'perfect_week' } } as any
     )
     return true
   }
